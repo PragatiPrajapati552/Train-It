@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Search Results</title>
+    <link rel="stylesheet" href="/styling/style.css" />
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+      integrity="sha384-LN+7fdVzj6u52u30Kp6M/trliBMCMKTyK833zpbD+pXdCLuTusPj697FH4R/5mcr"
+      crossorigin="anonymous"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.0/css/all.min.css"
+      integrity="sha512-DxV+EoADOkOygM4IR9yXP8Sb2qwgidEmeqAEmDKIOfPRQZOWbXCzLC6vjbZyy0vPisbH2SyW27+ddLVCN+OMzQ=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    />
+  </head>
+  <body>
+    <form method="GET" action="/searchpage" class="start">
+      <div class="input-group col-8 offset-4 mb-3">
+        <span class="input-group-text">
+          <i class="fa-solid fa-magnifying-glass"></i>
+        </span>
+        <input
+          type="text"
+          name="input"
+          class="form-control"
+          placeholder="Dataset name"
+        />
+        <button class="btn btn-info">Search</button>
+      </div>
+    </form>
+
+    <div class="container mt-4">
+      <% if (datasets.length > 0) { %>
+      <h1 id="searchtext">Results</h1>
+      <div class="row g-3 mt-2">
+        <% for(let d of datasets){ %>
+        <!-- Wrap each card in a column -->
+        <div class="col-md-4">
+          <div class="card h-100">
+            <div class="card-body">
+              <h5 class="card-title">
+                <em>Author: </em><%= d.author || "Unknown" %>
+              </h5>
+              <p class="card-text">
+                <em>Description:</em>
+                <%= d.description ? d.description.substring(0, 150) + "..." :
+                "No description" %>
+              </p>
+              <a
+                href="https://huggingface.co/datasets/<%= d.id %>"
+                target="_blank"
+                class="card-link"
+              >
+                <%= d.id %>
+              </a>
+            </div>
+          </div>
+        </div>
+        <% } %>
+      </div>
+      <% } else { %>
+      <div class="notfound">
+        <h1>:(</h1>
+        <h2>No datasets found. Try something else!</h2>
+      </div>
+      <% } %>
+    </div>
+  </body>
+</html>
